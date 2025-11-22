@@ -371,6 +371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameController
   MainBody: {fileID: 1897880703}
   NumberOfBodies: 10
+  maxOrbitDistance: 5
   CelestialBodyPrefab: {fileID: 6096887453610572753, guid: 2d0f1aa24b6285146a11501faccc72b5, type: 3}
 --- !u!4 &1605164198
 Transform:

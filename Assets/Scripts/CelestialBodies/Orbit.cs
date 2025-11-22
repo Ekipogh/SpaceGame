@@ -2,27 +2,41 @@ using UnityEngine;
 
 class Orbit
 {
-    float A;
-    float B;
+    private readonly float semiMajorAxis;
+    private readonly float semiMinorAxis;
+    private readonly float eccentricity;
 
-    public float Rotation{get;}
+    public float Rotation { get; }
 
-    float Eccentricity;
+    private readonly Transform center;
 
-    public Orbit(float semi_major, float semi_minor, float rotation)
+    public Vector3 Center { get => center.position; }
+
+    public float Velocity { get; set; } = 1.0f;
+
+    public Orbit(Transform center, float semiMajor, float semiMinor, float rotation, float velocity)
     {
-        this.A = semi_major;
-        this.B = semi_minor;
+        this.semiMajorAxis = semiMajor;
+        this.semiMinorAxis = semiMinor;
         this.Rotation = rotation;
-        this.Eccentricity = Mathf.Sqrt(A*A - B*B);
+        float c = Mathf.Sqrt(semiMajor * semiMajor - semiMinor * semiMinor);
+        this.eccentricity = c / semiMajor;
+        this.Velocity = velocity;
+        this.center = center;
     }
 
 
     public float OrbitalRadius(float angle)
     {
-        float rotated_angle = angle  - Rotation;
-        float radius = A * (1 - Eccentricity * Eccentricity) / (1 + Eccentricity * Mathf.Cos(rotated_angle));
-        return radius;
+        float rotatedAngle = angle - Rotation;
+        float eccSquared = eccentricity * eccentricity;
+        return semiMajorAxis * (1 - eccSquared) / (1 + eccentricity * Mathf.Cos(rotatedAngle));
     }
 
+    public float GetAngularVelocity(float angle)
+    {
+        float r = OrbitalRadius(angle);
+        float r0 = semiMinorAxis; // Reference radius
+        return Velocity * (r0 * r0) / (r * r);
+    }
 }
