@@ -51,7 +51,6 @@ public class GameController : MonoBehaviour
         float random_rotation = UnityEngine.Random.Range(0.0f, (float)(2 * Math.PI));
         var random_semi_major = UnityEngine.Random.Range(minOrbitDistance, maxOrbitDistance);
         var random_semi_minor = UnityEngine.Random.Range(minOrbitDistance, random_semi_major);
-        Debug.Log($"Generated orbit with a={random_semi_major}, b={random_semi_minor}");
         var random_velocity = UnityEngine.Random.Range(
             velocityScale / random_semi_major,
             velocityScale / (random_semi_major * 0.5f)
